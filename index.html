@@ -13,21 +13,18 @@
   <script src="https://cdn.jsdelivr.net/npm/webtorrent/webtorrent.min.js"></script>
   <script>const client = new WebTorrent();
 
-function startTorrent() {
-  const fileInput = document.getElementById('torrentInput');
-  const torrentFile = fileInput.files[0];
-  
-  if (!torrentFile) {
-    alert('Please select a torrent file.');
-    return;
-  }
+// Example magnet link (replace this with your valid magnet link)
+const magnetURI = 'magnet:?xt=urn:btih:YOUR_MAGNET_HASH_HERE';
 
-  const torrentId = URL.createObjectURL(torrentFile);
-  const torrent = client.add(torrentId);
+const torrent = client.add(magnetURI);
 
-  torrent.on('infoHash', function() {
-    console.log('Torrent info hash:', torrent.infoHash);
-  });
+torrent.on('error', function(err) {
+  console.error('Torrent error:', err);
+});
+
+// Other event listeners and handling as per your application's logic
+// (e.g., 'ready', 'download', 'done', etc.)
+
 
   torrent.on('ready', function() {
     console.log('Torrent is ready to stream!');
